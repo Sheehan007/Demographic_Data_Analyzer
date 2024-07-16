@@ -1,0 +1,60 @@
+# PROJECT-2
+# DEMOGRAPHIC DATA ANALYZER
+
+# Start
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+col_names = ['age','workclass','fnwglt','education','education-num','marital-status',
+             'occupation','realtionship','race','sex','capital-gain','capital-loss',
+             'hours-per-week','native-country','salary']
+
+df = pd.read_csv('Downloads/adult.data.csv', names = col_names, header = None, encoding = 'UTF-8')
+
+# 1. How many people of each race are represented in the dataset? 
+# This should be a Pandas series with race names as the index labels. 
+race_names = df['race'].unique()
+people_race = df['race'].value_counts()
+print (people_race)
+
+# 2. What is the average age of men? 
+avg_age = df['age'].mean()
+avg_age_men = (df[df['sex'] =='Male']['age'].mean())
+print ('Average age of men accroding to the survey is',avg_age_men,'%')
+
+# 3. What is the percentage of people who have a Bachelors degree?
+percent_bachelor = (df[df['education'] =='Bachelors'].shape[0] / df.shape[0]) * 100
+print ('Percentage of people with only a Bachelos degree are',percent_bachelor,'%')
+
+# 4. What percentage of people with advanced education (Bachelors, Masters, or Doctorate) make more than 50K?
+r1 = df['education'].isin(['Bachelors','Masters','Doctorate'])
+r2 = df['salary'] == '>50K'
+rich = (r1 & r2).sum() / r1.sum() * 100
+print ('This is the percentage of people that are rich with a degree',rich,'%')
+
+# 5. What percentage of people without advanced education make more than 50K?
+no_ed_rich = (~r1&r2).sum() / (~r1).sum() * 100
+print ('Percentage of people who are not educated but rich',no_ed_rich,'%')
+
+# 6. What is the minimum number of hours a person works per week?
+min_hours = df['hours-per-week'].min()
+print ('The minimum no of hours per week are',min_hours)
+
+# 7. What percentage of the people who work the minimum number of hours per week have a salary of more than 50K?
+p1 = df['hours-per-week'].min()
+p2 = df['salary'] == '>50K'
+less_work_people = (p1 & p2).sum() / p2.sum() * 100
+print ('The number of people that work the least but earn more than 50K are',less_work_people)
+
+# 8. What country has the highest percentage of people that earn >50K and what is that percentage?
+most_earning = (df['native-country'] [df['salary'] == '>50K'].value_counts() / 
+                df['native-country'].value_counts() * 100).sort_values(ascending = False).index[0]
+print ('The country that has the most number of high worth individuals is',most_earning)
+
+# 9. Identify the most popular occupation for those who earn >50K in India.
+most_pop_india = df[(df['native-country'] == 'India') & (df['salary'] == '>50K')] ['occupation'].value_counts().index[0]
+print ('The most popular occupation in India for people who earn more than 50K are',most_pop_india)
+
+# End
