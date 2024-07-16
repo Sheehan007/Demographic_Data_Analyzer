@@ -1,2 +1,5 @@
 # Demographic_Data_Analyzer
-Extracted a dataset from UC Irvines' to analyze the population demographic of the 1960s (Part of the freecodecamp's projects)
+I started freecodecamp's Data Analysis program. 
+Now that I have finished all the lessons, it was time to put the concepts learnt to some work.
+This is the second project: 
+In this project, I extracted a dataset from UC Irvines' Machine Learning repository to analyze the population demographic of the 1960s. 
